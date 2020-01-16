@@ -1,6 +1,6 @@
 import {
   getInvoice, getURL, postInvoice, postURL, putInvoice, putURL, validActions
-} from '@/unit/dataico/invoice'
+} from '@/unit/dataico-api/invoice'
 
 const fetchMock = require('fetch-mock');
 

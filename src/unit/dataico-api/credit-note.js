@@ -1,8 +1,8 @@
 import {
   buildGetRequest, buildPostRequest, buildPutRequest, validActions, validActionsMessage
-} from '@/unit/dataico/invoice';
+} from '@/unit/dataico-api/invoice';
 
-export const BASE_URL = "https://www.dataico.com/direct/dataico_api/v2/credit-notes"
+export const BASE_URL = "https://www.dataico.com/direct/dataico_api/v2/credit_notes"
 
 export function postURL() { return BASE_URL; }
 
@@ -11,14 +11,14 @@ export function putURL(creditNoteId) { return BASE_URL + '/' + creditNoteId; }
 export function getURL(creditNoteId) { return BASE_URL + '/' + creditNoteId; }
 
 /**
- Call this function to POST (create) invoice in dataico.
+ Call this function to POST (create) credit note in dataico.
 
  Depending on your actions, which could be:
  {} or {send_dian: true} or {send_dian:true send_email: true}
- the invoice will be created and then either sent to dian and/or
+ the credit note will be created and then either sent to dian and/or
  email sent depending on actions settings.
 
- const response = await postInvoice({}, invoice);
+ const response = await postCreditNote({}, creditNote);
 
  response will contain a hash like:
 
@@ -35,7 +35,7 @@ export function getURL(creditNoteId) { return BASE_URL + '/' + creditNoteId; }
    }
 
  @param actions
- @param invoice
+ @param creditNote
  @returns {Promise<any>}
  */
 export async function postCreditNote(actions, invoice) {
@@ -46,14 +46,14 @@ export async function postCreditNote(actions, invoice) {
 }
 
 /**
- Call this function to PUT (update) existing invoice in dataico.
+ Call this function to PUT (update) existing credit note in dataico.
 
  Depending on your actions, which could be:
  {} or {send_dian: true} or {send_dian:true send_email: true}
- the invoice will be either sent to dian and/or email sent depending
+ the credit note will be either sent to dian and/or email sent depending
  on actions settings.
 
- const response = await putInvoice({send_dian:true}, invoiceId);
+ const response = await putInvoice({send_dian:true}, creditNoteId);
 
  response will contain a hash like:
 
@@ -70,55 +70,31 @@ export async function postCreditNote(actions, invoice) {
    }
 
  @param actions
- @param invoiceId
+ @param creditNoteId
  @returns {Promise<any>}
  */
-export async function putCreditNote(actions, invoiceId) {
+export async function putCreditNote(actions, creditNoteId) {
   if (!validActions(actions)) { throw  validActionsMessage(actions); }
 
-  const response = await fetch(putURL(invoiceId), buildPutRequest(actions));
+  const response = await fetch(putURL(creditNoteId), buildPutRequest(actions));
   return response.json();
 }
 
 /**
  Call this function to GET existing invoice in dataico.
 
- const response = await getInvoice(invoiceId);
+ const response = await getCreditNote(creditNoteId);
 
  response will contain the invoice information like:
 
  {
-   "invoice": {
+   "credit_note": {
      "env": "PRUEBAS",
      "dataico_account_id": "002979c5-7c23-43ab-aa98-3fa7dce6e4d0",
      "number": "98001",
      "issue_date": "21/02/2019",
-     "payment_date": "23/02/2019 13:22:43",
-     "order_reference": "OC20",
-     "invoice_type_code": "FACTURA_VENTA",
-     "payment_means": "DEBIT_CARD",
-     "payment_means_type": "DEBITO",
      "numbering": {
        "resolution_number": "18760000001"
-     },
-     "notes": [
-       "string"
-     ],
-     "customer": {
-       "email": "daniel@email.com",
-       "phone": "3001234567",
-       "party_type": "PERSONA_JURIDICA",
-       "party_identification": "900373117",
-       "party_identification_type": "NIT",
-       "tax_level_code": "COMUN",
-       "regimen": "ORDINARIO",
-       "department": "BOLIVAR",
-       "city": "CARTAGENA",
-       "address_line": "carrera 8 Nº 6C - 95",
-       "country_code": "CO",
-       "company_name": "PJ - 900373117",
-       "first_name": "Stuart",
-       "family_name": "Espinoza"
      },
      "items": [
        {
@@ -150,10 +126,10 @@ export async function putCreditNote(actions, invoiceId) {
    }
  }
  @param actions
- @param invoiceId
+ @param creditNoteId
  @returns {Promise<any>}
  */
-export async function getCreditNote(invoiceId) {
-  const response = await fetch(getURL(invoiceId), buildGetRequest());
+export async function getCreditNote(creditNoteId) {
+  const response = await fetch(getURL(creditNoteId), buildGetRequest());
   return response.json();
 }
