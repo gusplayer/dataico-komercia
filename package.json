@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "npm run lint && npm run unit",
+    "unit": "jest --watch"
   },
   "dependencies": {
     "core-js": "^3.3.2",
@@ -17,9 +19,16 @@
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "fetch-mock": "^8.3.1",
+    "node-fetch": "^2.6.0",
+    "jest-cli": "^24.9.0",
+    "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -39,6 +48,20 @@
   "postcss": {
     "plugins": {
       "autoprefixer": {}
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   },
   "browserslist": [
